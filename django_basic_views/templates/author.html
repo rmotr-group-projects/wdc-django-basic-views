@@ -1,0 +1,14 @@
+<html>
+    <head>
+        <title>Author - {{ full_name }}</title>
+    </head>
+    <body>
+        <h1>{{ full_name }}</h1>
+        <ul>
+          <li><strong>Born:</strong> {{ born }}</li>
+          <li><strong>Nationality:</strong> {{ nationality }}</li>
+          <li><strong>Notable Work:</strong> {{ notable_work }}</li>
+        </ul>
+        <p><a href="{% url 'authors' %}">Back to Authors</a></p>
+    </body>
+</html>
