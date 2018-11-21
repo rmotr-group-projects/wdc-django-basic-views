@@ -1,10 +1,14 @@
-# Django Basic Views Practice 
+<img align="right" width="120" alt="rmotr.com" src="https://user-images.githubusercontent.com/7065401/45454218-80bee800-b6b9-11e8-97bb-bb5e7675f440.png">
+
+# Django Basic Views
 
 
 ### Setup Instruction
 
+You can copy and paste each of the following directly into the terminal:
+
 ```bash
-$ mkvirtualenv -p $(which python3.5) django_practice_1
+$ mkvirtualenv -p $(which python3.5) django_basic_views
 $ pip install -r requirements.txt
 ```
 
@@ -17,9 +21,9 @@ $ make runserver
 
 ### Your Tasks
 
-The structure of the whole Django project is built for you. Your job is to implement the views that are under `django_practice_1/views.py`, and complete the proper URLs in `django_practice_1/urls.py`.
+The structure of the whole Django project is built for you. Your job is to implement the views that are under `django_basic_views/views.py`, and complete the proper URLs in `django_basic_views/urls.py`.
 
-Running the development server with `$ make runserver`, you'll be able to test your views in the browser by pointing to `http://localhost:8080/<path-for-your-view>`, or if you're using Cloud9 then it will look like `https://<project-name>-<your-c9-username>.c9users.io/<path-for-your-view>` C9 should provide you a link when you run the server, just click through the warning.
+Running the development server with `$ make runserver`, you'll be able to test your views in the browser by pointing to `http://localhost:8080/<path-for-your-view>`, or if you're using Cloud9 then the URL will look like `https://<project-name>-<your-c9-username>.c9users.io/<path-for-your-view>` C9 should provide you a link when you run the server, just click through the warning.
 
 
 #### 1. hello_world view:
