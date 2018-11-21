@@ -30,6 +30,11 @@ Running the development server with `$ make runserver`, you'll be able to test y
 
 Implement a simple view under the `/hello-world` URL path that returns a 'Hello World' string. Use the function `HttpResponse()` imported from Django.
 
+In order to check if you've successfully completed this task you can run the following command. Check code inside `tests.py` if you want to see how a (simple) test is written in Django.
+ ```bash
+$ make test
+```
+
 <img src="https://user-images.githubusercontent.com/2788551/39313217-de76c182-4947-11e8-8aa8-e69b4e817526.png" width="50%" height="50%">
 
 
