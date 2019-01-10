@@ -1,5 +1,4 @@
 """django_basic_views URL Configuration
-
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/2.0/topics/http/urls/
 Examples:
@@ -19,11 +18,11 @@ from django_basic_views import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-
-    ##################
-    # Your URLs here #
-    ##################
-
+    path('hello-world/', views.hello_world),
+    path('date/', views.current_date),
+    path('my-age/<int:year>/<int:month>/<int:day>', views.my_age),
+    path('next-birthday/<str:birthday>', views.next_birthday),
+    path('profile/', views.profile),
     path('authors/', views.authors, name='authors'),
     path('author/<str:authors_last_name>', views.author, name='author'),
 ]
