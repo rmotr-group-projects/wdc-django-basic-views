@@ -8,3 +8,6 @@ class TasksTestCase(TestCase):
         response = self.client.get('/hello-world/')
         self.assertEqual(response.status_code, 200)
         self.assertIn('Hello World', str(response.content))
+
+    def test_task_2(self):
+        pass
