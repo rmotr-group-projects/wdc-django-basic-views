@@ -19,8 +19,6 @@ def current_date(request):
     """
     date = datetime.today()
     return HttpResponse("<h2>Today is {}, {} {}</h2>".format(date.day, date.strftime("%B"), date.year))
-    # Using templates:
-    # return render(request, 'date.html', {'day':date.day, 'month':date.strftime("%B"), 'year':date.year})
 
 # Use URL with format /my-age/<year>/<month>/<day>
 def my_age(request, year, month, day):
@@ -48,9 +46,11 @@ def next_birthday(request, birthday):
 
     delta1 = datetime(now.year, original_date.month, original_date.day)
     delta2 = datetime(now.year+1, original_date.month, original_date.day)
-    days_until_birthday = (max(delta1, delta2) - now).days
 
-    return HttpResponse("<h2>Days until your next birthday: {}</h2>".format(max(delta1, delta2)))
+
+    days_until_birthday = (delta2 - now).days if now > delta1 else (delta1 - now).days
+
+    return HttpResponse("<h2>Days until your next birthday: {}</h2>".format(days_until_birthday))
 
 
 
@@ -60,7 +60,9 @@ def profile(request):
         This view should render the template 'profile.html'. Make sure you return
         the correct context to make it work.
     """
-    pass
+
+    return render(request, 'profile.html', {'my_name':'Gonzalo Izquierdo Brown', 'my_age':'26'})
+
 
 
 
@@ -96,8 +98,8 @@ AUTHORS_INFO = {
 
 # Use provided URLs, don't change them
 def authors(request):
-    pass
+    return render(request, 'authors.html')
 
 
 def author(request, authors_last_name):
-    pass
+    return render(request, 'author.html',AUTHORS_INFO[authors_last_name])
