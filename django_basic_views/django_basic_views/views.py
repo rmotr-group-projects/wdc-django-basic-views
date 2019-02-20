@@ -42,7 +42,7 @@ def next_birthday(request, birthday):
         format 'YYYY-MM-DD'
     """
     original_date = datetime.strptime(birthday, "%Y-%m-%d")
-    now = datetime.today()
+    now = datetime.today() 
 
     delta1 = datetime(now.year, original_date.month, original_date.day)
     delta2 = datetime(now.year+1, original_date.month, original_date.day)
