@@ -7,7 +7,8 @@ from django.http import HttpResponse, HttpResponseBadRequest
 # Use /hello-world URL
 def hello_world(request):
     """Return a 'Hello World' string using HttpResponse"""
-    pass
+    
+    return HttpResponse("<h1>Hello World</h1>")
 
 
 # Use /date URL
@@ -17,7 +18,9 @@ def current_date(request):
 
         i.e: 'Today is 5, January 2018'
     """
-    pass
+    today = datetime.strftime(datetime.today(),"%d, %B %Y")
+    return HttpResponse("<h1>Today is {today}</h1>".format(today=today))
+    
 
 
 # Use URL with format /my-age/<year>/<month>/<day>
@@ -28,7 +31,10 @@ def my_age(request, year, month, day):
 
         i.e: /my-age/1992/1/20 returns 'Your age is 26 years old'
     """
-    pass
+    birthday = datetime(year, month, day,0,0,0)
+    diff = datetime.now() - birthday
+    age = int(diff.days/365)
+    return HttpResponse("Your age is {age} years old".format(age = age))
 
 
 # Use URL with format /next-birthday/<birthday>
@@ -38,7 +44,17 @@ def next_birthday(request, birthday):
         based on a given string GET parameter that comes in the URL, with the
         format 'YYYY-MM-DD'
     """
-    pass
+    input_birthday = datetime.strptime(birthday,"%Y-%m-%d")
+    now = datetime.now()
+    if input_birthday.month > now.month:
+        diff = input_birthday.replace(year=now.year) - now
+    elif input_birthday.month == now.month and input_birthday.day >= now.day:
+        diff = input_birthday.replace(year=now.year) - now
+    elif input_birthday.month == now.month and input_birthday.day < now.day:
+        diff = input_birthday.replace(year=now.year+1) - now
+    else:
+        diff = input_birthday.replace(year=now.year+1) - now
+    return HttpResponse("Days until next birthday: {diff}".format(diff=diff.days))
 
 
 # Use /profile URL
@@ -47,7 +63,12 @@ def profile(request):
         This view should render the template 'profile.html'. Make sure you return
         the correct context to make it work.
     """
-    pass
+    return render(request,'profile.html',{
+        'my_name' : 'Jon',
+        'my_age' : '26',
+    }
+    )
+    
 
 
 
@@ -83,8 +104,14 @@ AUTHORS_INFO = {
 
 # Use provided URLs, don't change them
 def authors(request):
-    pass
+    return render(request,'authors.html')
 
 
 def author(request, authors_last_name):
-    pass
+    return render(request,'author.html',{
+        'full_name' : AUTHORS_INFO[authors_last_name]['full_name'],
+        'born' : AUTHORS_INFO[authors_last_name]['born'],
+        'nationality' : AUTHORS_INFO[authors_last_name]['nationality'],
+        'notable_work' : AUTHORS_INFO[authors_last_name]['notable_work'],
+    }
+    )
