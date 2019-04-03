@@ -26,4 +26,5 @@ urlpatterns = [
 
     path('authors/', views.authors, name='authors'),
     path('author/<str:authors_last_name>', views.author, name='author'),
+    path('hello-world/', views.hello_world),
 ]
