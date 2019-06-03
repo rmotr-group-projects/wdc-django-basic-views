@@ -1,13 +1,14 @@
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, date
 
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseBadRequest
+from django.template import Context
 
 
 # Use /hello-world URL
 def hello_world(request):
     """Return a 'Hello World' string using HttpResponse"""
-    pass
+    return HttpResponse('<h1>Hello World</h1>')
 
 
 # Use /date URL
@@ -17,7 +18,8 @@ def current_date(request):
 
         i.e: 'Today is 5, January 2018'
     """
-    pass
+    d = datetime.today()
+    return HttpResponse('<h1>Today is {}</h1>'.format(d.strftime('%B %d, %Y')))
 
 
 # Use URL with format /my-age/<year>/<month>/<day>
@@ -28,7 +30,12 @@ def my_age(request, year, month, day):
 
         i.e: /my-age/1992/1/20 returns 'Your age is 26 years old'
     """
-    pass
+    today = datetime.today()
+    y = today.year
+    m = today.month
+    d = today.day
+    age = int(y) - int(year) - ((m, d) < (int(month), int(day)))
+    return HttpResponse('<h1> Your age is {} years old</h1>'.format(age))
 
 
 # Use URL with format /next-birthday/<birthday>
@@ -38,7 +45,22 @@ def next_birthday(request, birthday):
         based on a given string GET parameter that comes in the URL, with the
         format 'YYYY-MM-DD'
     """
-    pass
+    dob = birthday.split('-')
+    dob_year = int(dob[0])
+    dob_month = int(dob[1])
+    dob_day = int(dob[2])
+    today = date.today()
+    y = today.year
+    nextbday = date(y, dob_month, dob_day)
+    bday = (nextbday - today).days
+    if today < nextbday:
+        return HttpResponse('<h1>Days until next birthday: {}</h1>'.format(bday))
+    elif today == nextbday:
+        return HttpResponse('<h1>Happy Birthday</h1>')
+    else:
+        nextbday = date(y+1, dob_month, dob_day)
+        bday = (nextbday - today).days
+        return HttpResponse('<h1>Days until next birthday: {}</h1>'.format(bday))
 
 
 # Use /profile URL
@@ -47,7 +69,7 @@ def profile(request):
         This view should render the template 'profile.html'. Make sure you return
         the correct context to make it work.
     """
-    pass
+    return render(request, 'profile.html', context={'my_name': 'Danielle','my_age': 35})
 
 
 
@@ -83,8 +105,14 @@ AUTHORS_INFO = {
 
 # Use provided URLs, don't change them
 def authors(request):
-    pass
+    return render(request, 'authors.html', context=AUTHORS_INFO)
 
 
 def author(request, authors_last_name):
-    pass
+    author_found = AUTHORS_INFO[authors_last_name]
+    full_name = author_found['full_name']
+    born = author_found['born']
+    nationality = author_found['nationality']
+    notable_work = author_found['notable_work']
+    return render(request, 'author.html', context={'full_name': full_name, 'born': born, 'nationality': nationality, 'notable_work': notable_work})
+    
