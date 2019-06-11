@@ -31,7 +31,7 @@ def next_birthday(request, birthday):
     next_bday = datetime.strptime('{}{}{}'.format(datetime.now().year,dob.month,dob.day),'%Y%m%d')
 	
     if next_bday < datetime.now():
-    next_bday = datetime.strptime('{}{}{}'.format(datetime.now().year + 1 ,dob.month,dob.day),'%Y%m%d')  
+        next_bday = datetime.strptime('{}{}{}'.format(datetime.now().year + 1 ,dob.month,dob.day),'%Y%m%d')  
     return HttpResponse('Days untill next birthday: {days}'.format(days=(next_bday - datetime.now()).days))
 
 # Use /profile URL
