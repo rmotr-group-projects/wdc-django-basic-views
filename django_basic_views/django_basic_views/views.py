@@ -19,9 +19,8 @@ def current_date(request):
 
 # Use URL with format /my-age/<year>/<month>/<day>
 def my_age(request, year, month, day):
-    dob = datetime.strptime('{year} {month} {day}'
-    .format(year=year,month=month,day=day), '%Y %m %d')
-    age = datetime.now()-dob
+    dob = datetime.strptime('{year} {month} {day}'.format(year=year,month=month,day=day), '%Y %m %d')
+    age = datetime.now() - dob
     str_age = int(age.total_seconds()/60/60/24/365)	
     return HttpResponse("Your age is {age} old".format(age=str_age))
     
@@ -32,8 +31,8 @@ def next_birthday(request, birthday):
     next_bday = datetime.strptime('{}{}{}'.format(datetime.now().year,dob.month,dob.day),'%Y%m%d')
 	
     if next_bday < datetime.now():
-        next_bday = datetime.strptime('{}{}{}'.format(datetime.now().year + 1 ,dob.month,dob.day),'%Y%m%d')  
-	return HttpResponse('Days untill next birthday: {days}'.format(days=(next_bday - datetime.now()).days))
+    next_bday = datetime.strptime('{}{}{}'.format(datetime.now().year + 1 ,dob.month,dob.day),'%Y%m%d')  
+    return HttpResponse('Days untill next birthday: {days}'.format(days=(next_bday - datetime.now()).days))
 
 # Use /profile URL
 def profile(request):
