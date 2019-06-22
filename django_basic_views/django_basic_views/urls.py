@@ -23,7 +23,11 @@ urlpatterns = [
     ##################
     # Your URLs here #
     ##################
-
+    path('hello-world/', views.hello_world),
+    path('date/', views.current_date),
+    path('my-age/<int:year>/<int:month>/<int:day>', views.my_age),
+    path('next-birthday/<birthday>', views.next_birthday),
     path('authors/', views.authors, name='authors'),
     path('author/<str:authors_last_name>', views.author, name='author'),
+    path('profile/', views.profile)
 ]
