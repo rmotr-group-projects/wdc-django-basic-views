@@ -7,7 +7,7 @@ from django.http import HttpResponse, HttpResponseBadRequest
 # Use /hello-world URL
 def hello_world(request):
     """Return a 'Hello World' string using HttpResponse"""
-    pass
+    return HttpResponse('Hello World')
 
 
 # Use /date URL
