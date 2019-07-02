@@ -24,6 +24,9 @@ urlpatterns = [
     # Your URLs here #
     ##################
 
-    path('authors/', views.authors, name='authors'),
-    path('author/<str:authors_last_name>', views.author, name='author'),
+    path('hello-world/', views.hello_world, name='hello-world'),
+    path('date/', views.current_date, name='current_date'),
+    path('my-age/<int:year>/<int:month>/<int:day>', views.my_age, name='my-age'),
+    path('next-birthday/<birthday>/', views.next_birthday, name='next_birthday'),
+    path('profile/', views.profile, name='profile'),
 ]
