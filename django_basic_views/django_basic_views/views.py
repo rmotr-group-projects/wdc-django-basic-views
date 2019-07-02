@@ -6,8 +6,7 @@ from django.http import HttpResponse, HttpResponseBadRequest
 
 # Use /hello-world URL
 def hello_world(request):
-    """Return a 'Hello World' string using HttpResponse"""
-    pass
+    return HttpResponse("Hello World")
 
 
 # Use /date URL
@@ -17,7 +16,8 @@ def current_date(request):
 
         i.e: 'Today is 5, January 2018'
     """
-    pass
+    today = datetime.now().strftime("Today is %d, %B %Y")
+    return HttpResponse(today)
 
 
 # Use URL with format /my-age/<year>/<month>/<day>
@@ -28,7 +28,9 @@ def my_age(request, year, month, day):
 
         i.e: /my-age/1992/1/20 returns 'Your age is 26 years old'
     """
-    pass
+    your_age = int((datetime.now() - datetime(year,month,day)).days / 365)
+
+    return HttpResponse("Your age is {your_age} years old".format(your_age=your_age))
 
 
 # Use URL with format /next-birthday/<birthday>
@@ -38,7 +40,10 @@ def next_birthday(request, birthday):
         based on a given string GET parameter that comes in the URL, with the
         format 'YYYY-MM-DD'
     """
-    pass
+    birthday_to_datetime = datetime.strptime(birthday,"%Y-%m-%d")
+    time_now = datetime.now()
+    next_birthday = datetime(time_now.year, birthday_to_datetime.month, birthday_to_datetime.day) - time_now
+    return HttpResponse("Days until next birthday: {next_birthday}".format(next_birthday=next_birthday.days))
 
 
 # Use /profile URL
@@ -47,7 +52,11 @@ def profile(request):
         This view should render the template 'profile.html'. Make sure you return
         the correct context to make it work.
     """
-    pass
+    profile_context = {
+        'my_name': "Jordan Schultz",
+        'my_age': 27
+    }
+    return render(request,'profile.html',profile_context)
 
 
 
@@ -83,8 +92,12 @@ AUTHORS_INFO = {
 
 # Use provided URLs, don't change them
 def authors(request):
-    pass
+    return render(request,'authors.html')
 
 
 def author(request, authors_last_name):
-    pass
+    for author in AUTHORS_INFO.keys():
+        print(author)
+        if author.lower() == authors_last_name.lower():
+            author_context = AUTHORS_INFO[author]
+    return render(request,'author.html',author_context)
