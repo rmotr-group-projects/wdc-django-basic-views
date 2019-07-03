@@ -17,7 +17,9 @@ def current_date(request):
 
         i.e: 'Today is 5, January 2018'
     """
-    pass
+    date = datetime.now()
+    date_str = date.strftime('%d, %B %Y')
+    return HttpResponse('Today is {date}'.format(date=date_str))
 
 
 # Use URL with format /my-age/<year>/<month>/<day>
@@ -28,7 +30,11 @@ def my_age(request, year, month, day):
 
         i.e: /my-age/1992/1/20 returns 'Your age is 26 years old'
     """
-    pass
+    # Refer to https://www.geeksforgeeks.org/python-program-to-calculate-age-in-year/ for better ways to calculate.
+    days_in_year = 365.2425
+    birth_date = datetime(year, month, day)
+    age = int((datetime.today() - birth_date).days / days_in_year)
+    return HttpResponse('Your age is {years} years old'.format(years=age))
 
 
 # Use URL with format /next-birthday/<birthday>
