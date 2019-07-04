@@ -44,7 +44,10 @@ def next_birthday(request, birthday):
         based on a given string GET parameter that comes in the URL, with the
         format 'YYYY-MM-DD'
     """
-    pass
+    next_birthday = datetime.strptime(birthday, "%Y-%m-%d")
+    current_date = datetime.now()
+    days = (next_birthday-current_date).days
+    return HttpResponse('Days until next birthday: {days}'.format(days=days))
 
 
 # Use /profile URL
@@ -53,8 +56,7 @@ def profile(request):
         This view should render the template 'profile.html'. Make sure you return
         the correct context to make it work.
     """
-    pass
-
+    return render(request, 'profile.html', {'my_name': 'Gindi', 'my_age': 99})
 
 
 """
@@ -89,8 +91,9 @@ AUTHORS_INFO = {
 
 # Use provided URLs, don't change them
 def authors(request):
-    pass
+    return render(request, 'authors.html', AUTHORS_INFO)
 
 
 def author(request, authors_last_name):
-    pass
+    # Sanity checking ommitted
+    return render(request, 'author.html', AUTHORS_INFO[authors_last_name])

@@ -29,4 +29,6 @@ urlpatterns = [
     path('hello-world/', views.hello_world, name='hello_world'),
     path('date/', views.current_date, name='date'),
     path('my-age/<int:year>/<int:month>/<int:day>', views.my_age, name='my_age'),
+    path('next-birthday/<str:birthday>', views.next_birthday, name='next_birthday'),
+    path('profile/', views.profile, name='profile'),
 ]
