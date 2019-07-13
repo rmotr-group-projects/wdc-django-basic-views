@@ -7,7 +7,9 @@ from django.http import HttpResponse, HttpResponseBadRequest
 # Use /hello-world URL
 def hello_world(request):
     """Return a 'Hello World' string using HttpResponse"""
-    pass
+    
+    return HttpResponse("Hello World", status=200)
+
 
 
 # Use /date URL
@@ -17,7 +19,9 @@ def current_date(request):
 
         i.e: 'Today is 5, January 2018'
     """
-    pass
+    now = datetime.now()
+    current_date = now.strftime("Today is %-d, %B %Y")
+    return HttpResponse(current_date)
 
 
 # Use URL with format /my-age/<year>/<month>/<day>
@@ -28,7 +32,14 @@ def my_age(request, year, month, day):
 
         i.e: /my-age/1992/1/20 returns 'Your age is 26 years old'
     """
-    pass
+    date_string = ("{} {} {}".format(year, month, day))
+    birthdate = datetime.strptime(date_string, '%Y %m %d')
+    now = datetime.now()
+    age_days = now - birthdate
+    age_years = age_days.days / 365.25
+    
+    return_string = "Your age is {} years old".format(round(age_years))
+    return HttpResponse(return_string)
 
 
 # Use URL with format /next-birthday/<birthday>
@@ -38,7 +49,12 @@ def next_birthday(request, birthday):
         based on a given string GET parameter that comes in the URL, with the
         format 'YYYY-MM-DD'
     """
-    pass
+    date_string = "{}".format(birthday)
+    birthday_date = datetime.strptime(date_string, '%Y-%m-%d')
+    now = datetime.now()
+    days_until = birthday_date - now
+    return_string = 'Days until next birthday: {}'.format(days_until.days)
+    return HttpResponse(return_string)
 
 
 # Use /profile URL
@@ -47,7 +63,8 @@ def profile(request):
         This view should render the template 'profile.html'. Make sure you return
         the correct context to make it work.
     """
-    pass
+    context = {'my_name':"Alex", 'my_age': 27}
+    return render(request, 'profile.html', context=context)
 
 
 
@@ -83,8 +100,17 @@ AUTHORS_INFO = {
 
 # Use provided URLs, don't change them
 def authors(request):
-    pass
+    
+    return render(request, "authors.html", context=AUTHORS_INFO)
+    
 
 
 def author(request, authors_last_name):
+    
+    return render(request, 'author.html', context=AUTHORS_INFO[authors_last_name])
+
+    
+        
+    
+    
     pass
