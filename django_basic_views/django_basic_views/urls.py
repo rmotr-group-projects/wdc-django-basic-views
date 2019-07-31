@@ -23,7 +23,7 @@ urlpatterns = [
     ##################
     # Your URLs here #
     ##################
-    path('',views.hello_world),
+    path('hello-world/',views.hello_world),
     path('date/',views.current_date),
     path('my-age/<int:year>/<int:month>/<int:day>',views.my_age),
     path('profile', views.profile),
