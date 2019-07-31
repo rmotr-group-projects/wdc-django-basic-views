@@ -19,7 +19,7 @@ from django_basic_views import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('hello_world/', views.hello_world, name = 'hello_world'),
+    path('hello-world/', views.hello_world, name = 'hello_world'),
     path('date/', views.current_date, name = 'current_date'),
     path('my_age/<int:year>/<int:month>/<int:day>', views.my_age, name = 'my_age'),
     path('next_birthday/<str:birthday>', views.next_birthday, name = 'next_birthday'),
