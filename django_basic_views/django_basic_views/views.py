@@ -30,10 +30,15 @@ def my_age(request, year, month, day):
 
         i.e: /my-age/1992/1/20 returns 'Your age is 26 years old'
     """
-    age = datetime.now().year - year
-    if datetime.now().month - month < 0:
+    try:
+        datetime(year, month, day)
+    except:
+        raise ValueError("Invalid Birthday")
+    now = datetime.now()
+    age = now.year - year
+    if now.month - month < 0:
         age -= 1
-    elif datetime.now().day - day < 0:
+    elif now.month == month and now.day - day < 0:
         age -= 1
     return HttpResponse(f"Your age is {age} years old")
 
@@ -45,7 +50,16 @@ def next_birthday(request, birthday):
         based on a given string GET parameter that comes in the URL, with the
         format 'YYYY-MM-DD'
     """
-    pass
+    now = datetime.now()
+    try:
+        dt_birthday = datetime.strptime(birthday, "%Y-%m-%d")
+    except:
+        raise ValueError("Invalid Birthday. Birthday must be in the format YYYY-MM-DD")
+    next_birthday = datetime(now.year, dt_birthday.month, dt_birthday.day)
+    if now > next_birthday:
+        next_birthday += timedelta.years(1)
+    days_til_next_birthday = (next_birthday - now).days + 1
+    return HttpResponse(f"Days until next birthday: {days_til_next_birthday}")
 
 
 # Use /profile URL
