@@ -18,7 +18,7 @@ def current_date(request):
         i.e: 'Today is 5, January 2018'
     """
     d=datetime.now()
-    return d.strftime("Today is %d, %B %Y")
+    return HttpResponse(d.strftime("Today is %d, %B %Y"))
     
 
 
@@ -30,10 +30,11 @@ def my_age(request, year, month, day):
 
         i.e: /my-age/1992/1/20 returns 'Your age is 26 years old'
     """
-    d=datetime.now()
-    thisyear=d.strftime('%Y')
-    age = thisyear - year
-    return "Your age is {} years old".format(age)
+    currentdate=datetime.now()
+    birthday=datetime(year=year, month=month, day=day)
+    delta = currentdate - birthday
+    age= int(delta.days/365)
+    return HttpResponse("Your age is {} years old".format(age))
 
 
 # Use URL with format /next-birthday/<birthday>
@@ -43,11 +44,15 @@ def next_birthday(request, birthday):
         based on a given string GET parameter that comes in the URL, with the
         format 'YYYY-MM-DD'
     """
-    date1 = now
-    date2 = datetime.datetime(now.year, birthday.month, birthday.day)
-    delta=date2 - date1
-    days = delta.total_seconds() / 60 /60 /24
-    return "Days until next birthday: {}".format(days)
+    currentdate = datetime.now()
+    format_str = '%Y-%m-%d'
+    birthday = datetime.strptime(birthday, format_str)
+    nextbirthday = birthday.replace(year=currentdate.year)
+    if currentdate > nextbirthday:
+        nextbirthday = nextbirthday.replace(year=currentdate.year+1)
+    delta = nextbirthday - currentdate
+    days = delta.days+1
+    return HttpResponse("Days until next birthday: {}".format(days))
 
 
 # Use /profile URL
