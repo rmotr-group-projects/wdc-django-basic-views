@@ -7,7 +7,7 @@ from django.http import HttpResponse, HttpResponseBadRequest
 # Use /hello-world URL
 def hello_world(request):
     """Return a 'Hello World' string using HttpResponse"""
-    pass
+    return HttpResponse('Hello World')
 
 
 # Use /date URL
@@ -17,7 +17,9 @@ def current_date(request):
 
         i.e: 'Today is 5, January 2018'
     """
-    pass
+    d=datetime.now()
+    return d.strftime("Today is %d, %B %Y")
+    
 
 
 # Use URL with format /my-age/<year>/<month>/<day>
@@ -28,7 +30,10 @@ def my_age(request, year, month, day):
 
         i.e: /my-age/1992/1/20 returns 'Your age is 26 years old'
     """
-    pass
+    d=datetime.now()
+    thisyear=d.strftime('%Y')
+    age = thisyear - year
+    return "Your age is {} years old".format(age)
 
 
 # Use URL with format /next-birthday/<birthday>
@@ -38,7 +43,11 @@ def next_birthday(request, birthday):
         based on a given string GET parameter that comes in the URL, with the
         format 'YYYY-MM-DD'
     """
-    pass
+    date1 = now
+    date2 = datetime.datetime(now.year, birthday.month, birthday.day)
+    delta=date2 - date1
+    days = delta.total_seconds() / 60 /60 /24
+    return "Days until next birthday: {}".format(days)
 
 
 # Use /profile URL
@@ -47,7 +56,10 @@ def profile(request):
         This view should render the template 'profile.html'. Make sure you return
         the correct context to make it work.
     """
-    pass
+    return render(request, 'profile.html', {
+        'my_name': 'Chinnappa',
+        'my_age': 44
+    })
 
 
 
@@ -83,8 +95,8 @@ AUTHORS_INFO = {
 
 # Use provided URLs, don't change them
 def authors(request):
-    pass
+    return render(request, 'authors.html', context=AUTHORS_INFO)
 
 
 def author(request, authors_last_name):
-    pass
+    return render(request, 'author.html', context=AUTHORS_INFO[authors_last_name])
